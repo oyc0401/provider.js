@@ -4,19 +4,8 @@ body {
     flex-direction: column;
     height: 100vh;
 }
-
-.center {
-    display: flex;
-    /*background: aqua;*/
-    flex-direction: column;
-    flex: 100;
-    align-items: center;
-    justify-content: center;
-}
-
 .column {
-    /*background: grey;*/
-    display: inline-flex;
+    display: flex;
     flex: 10;
     flex-direction: column;
     justify-content: center;
