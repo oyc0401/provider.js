@@ -5,7 +5,7 @@
 
 
 
-## 사용방법
+
 
 ### 시작하기 전에
 - module을 사용해 script 태그에서 import가 가능하게 만듭니다.
@@ -16,7 +16,7 @@
 
 - 파일을 다운받고, service 폴더에 있는 `provider.js`를 프로젝트 폴더에 옮겨줍니다.
 
-## Provider
+## 사용방법
 
 ### Provider 생성
 
