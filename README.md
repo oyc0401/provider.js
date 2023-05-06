@@ -39,6 +39,7 @@ let provider = new Provider(new ViewModel());
 provider.watch(function (model) {
     let count = document.getElementById("count");
     count.innerText = `${model.count}`;
+    
 })
 ```
 
@@ -56,6 +57,7 @@ provider.read(function (model) {
     button.addEventListener("click", function () {
         model.plus();
     });
+    
 })
 ```
 
@@ -67,12 +69,17 @@ provider.read(function (model) {
 
 ```javascript
 export class ViewModel extends ChangeNotifier {
-    count = 0;
-    
+    #count = 0;
+
+    get count() {
+        return this.#count;
+    }
+
     plus() {
-        this.count++;
+        this.#count++;
         this.notifyListeners();
     }
+
 }
 ```
 
@@ -129,21 +136,6 @@ body {
 }
 ```
 
-view_model.js
-
-```javascript
-import {ChangeNotifier} from "../service/provider.js"
-
-export class ViewModel extends ChangeNotifier {
-    count = 0;
-
-    plus() {
-        this.count++;
-        this.notifyListeners();
-    }
-}
-```
-
 index.js
 
 ```javascript
@@ -155,6 +147,7 @@ let provider = new Provider(new ViewModel());
 provider.watch(function (model) {
     let count = document.getElementById("count");
     count.innerText = `${model.count}`;
+    
 })
 
 provider.read(function (model) {
@@ -162,6 +155,28 @@ provider.read(function (model) {
     button.addEventListener("click", function () {
         model.plus();
     });
+    
 })
+```
+
+
+view_model.js
+
+```javascript
+import {ChangeNotifier} from "../service/provider.js"
+
+export class ViewModel extends ChangeNotifier {
+    #count = 0;
+
+    get count() {
+        return this.#count;
+    }
+
+    plus() {
+        this.#count++;
+        this.notifyListeners();
+    }
+
+}
 ```
 
