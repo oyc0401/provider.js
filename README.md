@@ -1,20 +1,28 @@
 # Provider.js
 바닐라 자바스크립트를 위한 상태관리 라이브러리
 
+순수한 자바스크립트로 플러터의 Provider패턴을 구현하는 것을 목표로 합니다.
+
+
+
 ## 사용방법
 
 ### 시작하기 전에
-module을 사용해 script태그에서 import가 가능하게 만듭니다.
+- module을 사용해 script 태그에서 import가 가능하게 만듭니다.
 
 ```html
 <script type="module" src="index.js"></script>
 ```
 
+- 파일을 다운받고, service 폴더에 있는 `provider.js`를 프로젝트 폴더에 옮겨줍니다.
+
+## Provider
+
 ### Provider 생성
 
 생성자를 사용해 Provider 객체를 만듭니다.
 
-매개변수로 사용할 뷰모델을 만들어 넣습니다.
+사용할 뷰모델을 생성자 매개변수에 넣습니다.
 
 ```javascript
 let provider = new Provider(new ViewModel());
@@ -23,9 +31,9 @@ let provider = new Provider(new ViewModel());
 ### 값 읽어오기
 `provider.watch()`를 사용해 값을 읽어옵니다.
 
-콜백함수 안에 뷰모델이 변경될 때 UI가 변경되는 코드를 적습니다.
+익명함수 안에 뷰모델이 변경될 때 UI가 변경되는 코드를 적습니다.
 
-콜백함수 매개변수에 있는 `model`에서 값을 가져올 수 있습니다.
+익명함수 매개변수인 `model`을 통해 값을 가져옵니다.
 
 ```javascript
 provider.watch(function (model) {
@@ -38,9 +46,9 @@ provider.watch(function (model) {
 
 `provider.read()`를 사용해 값을 변경합니다.
 
-콜백함수 안에 뷰모델을 변경하는 코드를 적습니다.
+익명함수 안에 뷰모델을 변경하는 코드를 적습니다.
 
-콜백함수 매개변수에 있는 `model`에서 값을 변경할 수 있습니다.
+익명함수 매개변수인 `model`을 통해 값을 변경합니다.
 
 ```javascript
 provider.read(function (model) {
@@ -55,11 +63,12 @@ provider.read(function (model) {
 
 뷰모델은 `ChangeNotifier`클래스를 상속 받습니다.
 
+데이터를 변경한 후, 데이터가 변경된 것을 알리기 위해 `this.notifyListeners()`를 실행합니다.
+
 ```javascript
 export class ViewModel extends ChangeNotifier {
-
     count = 0;
-
+    
     plus() {
         this.count++;
         this.notifyListeners();
@@ -69,7 +78,7 @@ export class ViewModel extends ChangeNotifier {
 
 ## 카운터 웹
 
-아래는 카운터 웹 사이트의 예제코드입니다.
+아래는 카운터 웹의 예제코드입니다.
 
 index.html
 
@@ -126,7 +135,6 @@ view_model.js
 import {ChangeNotifier} from "../service/provider.js"
 
 export class ViewModel extends ChangeNotifier {
-
     count = 0;
 
     plus() {
@@ -147,7 +155,6 @@ let provider = new Provider(new ViewModel());
 provider.watch(function (model) {
     let count = document.getElementById("count");
     count.innerText = `${model.count}`;
-
 })
 
 provider.read(function (model) {
@@ -155,7 +162,6 @@ provider.read(function (model) {
     button.addEventListener("click", function () {
         model.plus();
     });
-
 })
 ```
 
