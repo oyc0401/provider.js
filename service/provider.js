@@ -3,7 +3,6 @@
 // 바닐라 자바스크립트 상태 관리 라이브러리
 
 export class Provider {
-
     #view_model;
 
     constructor(model) {
@@ -28,7 +27,6 @@ export class Provider {
 }
 
 export class ChangeNotifier {
-
     #listeners = [];
 
     notifyListeners() {
