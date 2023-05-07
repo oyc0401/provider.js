@@ -8,24 +8,30 @@
 
 
 ### 시작하기 전에
+
+- 파일을 다운받고, service 폴더에 있는 `provider.js`를 프로젝트 폴더에 옮겨줍니다.
+
+
 - module을 사용해 script 태그에서 import가 가능하게 만듭니다.
 
 ```html
-<script type="module" src="index.js"></script>
+<script type="module" src="index.js" defer></script>
 ```
 
-- 파일을 다운받고, service 폴더에 있는 `provider.js`를 프로젝트 폴더에 옮겨줍니다.
+
 
 ## 사용방법
 
 ### Provider 생성
 
-생성자를 사용해 Provider 객체를 만듭니다.
+`Provider.instance`로 Provider를 생성합니다.
 
-사용할 뷰모델을 생성자 매개변수에 넣습니다.
+사용할 뷰모델을 `model`에 넣습니다.
 
 ```javascript
-let provider = new Provider(new ViewModel());
+let provider = Provider.instance({
+    model: new ViewModel()
+})
 ```
 
 ### 값 읽어오기
@@ -57,9 +63,41 @@ provider.read(function (model) {
     button.addEventListener("click", function () {
         model.plus();
     });
-    
+
 })
 ```
+
+### 연결 완료
+
+연결이 모두 끝나면 `close()`를 통해 UI를 반영합니다.
+
+```javascript
+provider.close();
+```
+
+### Cascade
+
+Provider에 Cascade를 사용할 수 있습니다.
+
+```javascript
+Provider.instance({
+    model: new ViewModel()
+})
+    .watch(function (model) {
+        let count = document.getElementById("count");
+        count.innerText = `${model.count}`;
+
+    })
+    .read(function (model) {
+        let button = document.getElementById("button");
+        button.addEventListener("click", function () {
+            model.plus();
+        });
+
+    })
+    .close();
+```
+
 
 ## ChangeNotifier
 
@@ -142,21 +180,22 @@ index.js
 import {ViewModel} from "./view_model.js"
 import {Provider} from "../service/provider.js";
 
-let provider = new Provider(new ViewModel());
-
-provider.watch(function (model) {
-    let count = document.getElementById("count");
-    count.innerText = `${model.count}`;
-    
+Provider.instance({
+    model: new ViewModel()
 })
+    .watch(function (model) {
+        let count = document.getElementById("count");
+        count.innerText = `${model.count}`;
 
-provider.read(function (model) {
-    let button = document.getElementById("button");
-    button.addEventListener("click", function () {
-        model.plus();
-    });
-    
-})
+    })
+    .read(function (model) {
+        let button = document.getElementById("button");
+        button.addEventListener("click", function () {
+            model.plus();
+        });
+
+    })
+    .close();
 ```
 
 
