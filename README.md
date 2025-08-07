@@ -22,6 +22,28 @@
 
 ## 사용방법
 
+### 뷰모델 생성
+
+뷰모델은 `ChangeNotifier`클래스를 상속 받습니다.
+
+데이터를 변경한 후, 데이터가 변경된 것을 알리기 위해 `this.notifyListeners()`를 실행합니다.
+
+```javascript
+export class ViewModel extends ChangeNotifier {
+    #count = 0;
+
+    get count() {
+        return this.#count;
+    }
+
+    plus() {
+        this.#count++;
+        this.notifyListeners();
+    }
+
+}
+```
+
 ### Provider 생성
 
 `Provider.instance`로 Provider를 생성합니다.
@@ -59,28 +81,6 @@ button.addEventListener("click", function () {
 
 ```
 
-
-## ChangeNotifier
-
-뷰모델은 `ChangeNotifier`클래스를 상속 받습니다.
-
-데이터를 변경한 후, 데이터가 변경된 것을 알리기 위해 `this.notifyListeners()`를 실행합니다.
-
-```javascript
-export class ViewModel extends ChangeNotifier {
-    #count = 0;
-
-    get count() {
-        return this.#count;
-    }
-
-    plus() {
-        this.#count++;
-        this.notifyListeners();
-    }
-
-}
-```
 
 ## 카운터 웹
 
