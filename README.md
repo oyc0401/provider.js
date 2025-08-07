@@ -22,7 +22,7 @@
 
 ## 사용방법
 
-### 뷰모델 생성
+## 뷰모델 만들기
 
 뷰모델은 `ChangeNotifier`클래스를 상속 받습니다.
 
@@ -43,23 +43,22 @@ export class ViewModel extends ChangeNotifier {
 
 }
 ```
+## UI 다루기
 
 ### Provider 생성
 
 `Provider.instance`로 Provider를 생성합니다.
 
-매개변수 안에 사용할 뷰모델을 넣습니다.
+사용할 뷰모델 인스턴스를 인자로 전달합니다.
 
 ```javascript
 let provider = Provider.instance(new ViewModel())
 ```
 
-### 값 읽어오기
-`provider.watch()`를 사용해 값을 읽어옵니다.
+### 값 읽기
+`provider.watch()`를 사용해 상태를 구독할 수 있습니다.
 
-익명함수 안에 뷰모델이 변경될 때 UI가 변경되는 코드를 적습니다.
-
-익명함수 매개변수인 `model`을 통해 값을 가져옵니다.
+콜백 함수의 model을 통해 상태 값을 가져오며, `notifyListeners()`가 실행되면 해당 콜백이 다시 실행됩니다.
 
 ```javascript
 provider.watch(function (model) {
@@ -69,9 +68,9 @@ provider.watch(function (model) {
 })
 ```
 
-### 값 변경하기
+### 값 쓰기
 
-`provider.model`를 사용해 뷰모델을 사용합니다.
+`provider.model`을 통해 뷰모델에 접근해 상태를 변경할 수 있습니다.
 
 ```javascript
 let button = document.getElementById("button");

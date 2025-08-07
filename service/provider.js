@@ -27,13 +27,13 @@ export class Provider {
 
         this.#view_model.addListener(listener);
 
-        this.soonRefresh();
+        this.soonNotify();
         return this;
     }
 
     flag = false;
 
-    soonRefresh() {
+    soonNotify() {
         if(this.flag) return; 
 
         this.flag = true;
