@@ -52,7 +52,7 @@ export class ViewModel extends ChangeNotifier {
 사용할 뷰모델 인스턴스를 인자로 전달합니다.
 
 ```javascript
-let provider = Provider.instance(new ViewModel())
+const provider = Provider.instance(new ViewModel())
 ```
 
 ### 값 읽기
@@ -62,7 +62,7 @@ let provider = Provider.instance(new ViewModel())
 
 ```javascript
 provider.watch(function (model) {
-    let count = document.getElementById("count");
+    const count = document.getElementById("count");
     count.innerText = `${model.count}`;
     
 })
@@ -73,7 +73,7 @@ provider.watch(function (model) {
 `provider.model`을 통해 뷰모델에 접근해 상태를 변경할 수 있습니다.
 
 ```javascript
-let button = document.getElementById("button");
+const button = document.getElementById("button");
 button.addEventListener("click", function () {
     provider.model.plus();
 });
@@ -106,33 +106,6 @@ index.html
 </html>
 ```
 
-index.css
-
-```css
-body {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-.column {
-    display: flex;
-    flex: 10;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#count {
-    font-size: 32px;
-}
-
-#button {
-    font-size: 32px;
-    width: 90px;
-    height: 50px;
-}
-```
 
 index.js
 
@@ -140,14 +113,14 @@ index.js
 import {ViewModel} from "./view_model.js"
 import {Provider} from "../service/provider.js";
 
-let provider = Provider.instance(new ViewModel());
+const provider = Provider.instance(new ViewModel());
 
 provider.watch(function (model) {
-    let count = document.getElementById("count");
+    const count = document.getElementById("count");
     count.innerText = `${model.count}`;
 });
 
-let button = document.getElementById("button");
+const button = document.getElementById("button");
 button.addEventListener("click", function () {
     provider.model.plus();
 });
