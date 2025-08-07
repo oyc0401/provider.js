@@ -26,12 +26,10 @@
 
 `Provider.instance`로 Provider를 생성합니다.
 
-사용할 뷰모델을 `model`에 넣습니다.
+매개변수 안에 사용할 뷰모델을 넣습니다.
 
 ```javascript
-let provider = Provider.instance({
-    model: new ViewModel()
-})
+let provider = Provider.instance(new ViewModel())
 ```
 
 ### 값 읽어오기
@@ -51,51 +49,14 @@ provider.watch(function (model) {
 
 ### 값 변경하기
 
-`provider.read()`를 사용해 값을 변경합니다.
-
-익명함수 안에 뷰모델을 변경하는 코드를 적습니다.
-
-익명함수 매개변수인 `model`을 통해 값을 변경합니다.
+`provider.model`를 사용해 뷰모델을 사용합니다.
 
 ```javascript
-provider.read(function (model) {
-    let button = document.getElementById("button");
-    button.addEventListener("click", function () {
-        model.plus();
-    });
+let button = document.getElementById("button");
+button.addEventListener("click", function () {
+    provider.model.plus();
+});
 
-})
-```
-
-### 연결 완료
-
-연결이 모두 끝나면 `close()`를 통해 UI를 반영합니다.
-
-```javascript
-provider.close();
-```
-
-### Cascade
-
-Provider에 Cascade를 사용할 수 있습니다.
-
-```javascript
-Provider.instance({
-    model: new ViewModel()
-})
-    .watch(function (model) {
-        let count = document.getElementById("count");
-        count.innerText = `${model.count}`;
-
-    })
-    .read(function (model) {
-        let button = document.getElementById("button");
-        button.addEventListener("click", function () {
-            model.plus();
-        });
-
-    })
-    .close();
 ```
 
 
@@ -180,22 +141,18 @@ index.js
 import {ViewModel} from "./view_model.js"
 import {Provider} from "../service/provider.js";
 
-Provider.instance({
-    model: new ViewModel()
-})
-    .watch(function (model) {
-        let count = document.getElementById("count");
-        count.innerText = `${model.count}`;
+let provider = Provider.instance(new ViewModel());
 
-    })
-    .read(function (model) {
-        let button = document.getElementById("button");
-        button.addEventListener("click", function () {
-            model.plus();
-        });
+provider.watch(function (model) {
+    let count = document.getElementById("count");
+    count.innerText = `${model.count}`;
+});
 
-    })
-    .close();
+let button = document.getElementById("button");
+button.addEventListener("click", function () {
+    provider.model.plus();
+});
+
 ```
 
 

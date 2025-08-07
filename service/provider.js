@@ -5,8 +5,12 @@
 export class Provider {
     #view_model;
 
-    static instance({model}) {
+    static instance(model) {
         return new Provider(model);
+    }
+
+    get model(){
+        return this.#view_model;
     }
 
     constructor(model) {
@@ -22,45 +26,23 @@ export class Provider {
         }
 
         this.#view_model.addListener(listener);
+
+        this.soonRefresh();
         return this;
     }
 
-    read(read) {
-        if (typeof read != "function") {
-            throw "Provider.read: 입력한 함수를 확인해주세요";
-        }
+    flag = false;
 
-        read(this.#view_model);
-        return this;
-    }
+    soonRefresh() {
+        if(this.flag) return; 
 
-    close() {
-        this.#view_model.notifyListeners();
-    }
+        this.flag = true;
 
-
-    // watchItem({element, listener}) {
-    //     if (typeof listener != "function") {
-    //         console.log(typeof listener);
-    //         throw "Provider.watch: 입력한 리스너를 확인해주세요";
-    //     }
-    //
-    //     this.#view_model.addListener(element,listener);
-    //     return this;
-    // }
-
-
-    readItem({element, func: read}) {
-        if (!element instanceof Element) {
-            throw "Provider.read: Element를 확인해주세요";
-        }
-        if (typeof read != "function") {
-            throw "Provider.read: 입력한 함수를 확인해주세요";
-        }
-
-
-        read(element, this.#view_model);
-        return this;
+         requestAnimationFrame(()=>{
+            this.#view_model.notifyListeners();
+            this.flag = false;
+         })
+        
     }
 
 
